@@ -15,6 +15,7 @@ async function initialize() {
     const response = await fetch("/secret")
 
     const { clientSecret } = await response.json();
+    console.log("🚀 , file: setupfuture.js:18 , initialize , clientSecret", clientSecret)
 
     const appearance = {
         theme: 'night'

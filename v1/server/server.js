@@ -1,9 +1,10 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
-const { allowedNodeEnvironmentFlags } = require('process')
 const {createPaymentIntent} = require('./createPaymentIntent')
 const {createSetupIntent} = require('./createSetupIntent')
 const app = express()
+
 
 const clientPath = path.join(__dirname,'../client/')
 
@@ -19,7 +20,7 @@ app.get('/token',(req,res)=>{
 })
 
 app.get('/secret', async (req, res) => {
-    const customerId='cus_MwKhnmnXAN49Md'
+    const customerId='cus_N0oNfHVxRXZ6q8'
     const intent = await createSetupIntent(customerId)
     res.json({clientSecret: intent.client_secret});
 });
@@ -34,9 +35,7 @@ app.get('/setupcomplete',(req,res)=>{
 })
 app.post('/create-payment-intent',async (req,res)=>{
     const { items } = req.body;
-    console.log("🚀 , file: server.js:38 , app.post , items", items)
     const response = await createPaymentIntent(items)
-    console.log("🚀 , file: server.js:39 , app.post , response", response)
     res.send({
         clientSecret: response.client_secret,
      });
